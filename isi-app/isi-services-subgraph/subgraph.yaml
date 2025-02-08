@@ -1,0 +1,35 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Isi
+    network: base-sepolia
+    source:
+      address: "0x8D9B5030de69F1f872BE8c8BCC57542815a7203c"
+      abi: Isi
+      startBlock: 21612149
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ServiceBought
+        - ServiceCreated
+        - ServiceDelivered
+        - ServiceRefunded
+      abis:
+        - name: Isi
+          file: ./abis/Isi.json
+      eventHandlers:
+        - event: ServiceBought(uint256,address,uint256)
+          handler: handleServiceBought
+        - event: ServiceCreated(uint256,string,uint256,address)
+          handler: handleServiceCreated
+        - event: ServiceDelivered(uint256,address,uint256)
+          handler: handleServiceDelivered
+        - event: ServiceRefunded(uint256,address,uint256)
+          handler: handleServiceRefunded
+      file: ./src/isi.ts
