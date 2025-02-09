@@ -16,6 +16,7 @@ import {
 } from '@coinbase/onchainkit/identity';
 
 
+
 export default function Navbar() {
   return (
     <div className=" font-sans dark:bg-background dark:text-white bg-white text-black">

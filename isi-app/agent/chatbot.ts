@@ -42,10 +42,10 @@ async function getRecommendedExperiences(userProfile) {
   }`;
   const data = await querySubgraph(query);
 
-  // Convert prices from base unit (6 decimals for USDC) to USD
+
   const recommendations = data.data.serviceCreateds.slice(0, 2).map(service => ({
     ...service,
-    price: service.price / 10 ** 6, // Convert to USD
+    price: service.price / 10 ** 6, 
   }));
 
   return recommendations;

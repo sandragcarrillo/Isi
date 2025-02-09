@@ -1,127 +1,58 @@
 'use client';
 
-import {
-  ConnectWallet,
-  Wallet,
-  WalletDropdown,
-  WalletDropdownDisconnect,
-  WalletDropdownFundLink,
-} from '@coinbase/onchainkit/wallet';
-import {
-  Address,
-  Avatar,
-  Name,
-  Identity,
-  EthBalance,
-} from '@coinbase/onchainkit/identity';
-import ArrowSvg from './svg/ArrowSvg';
-import ImageSvg from './svg/Image';
-import OnchainkitSvg from './svg/OnchainKit';
-
-const components = [
-  {
-    name: 'Transaction',
-    url: 'https://onchainkit.xyz/transaction/transaction',
-  },
-  { name: 'Swap', url: 'https://onchainkit.xyz/swap/swap' },
-  { name: 'Checkout', url: 'https://onchainkit.xyz/checkout/checkout' },
-  { name: 'Wallet', url: 'https://onchainkit.xyz/wallet/wallet' },
-  { name: 'Identity', url: 'https://onchainkit.xyz/identity/identity' },
-];
-
-const templates = [
-  { name: 'NFT', url: 'https://github.com/coinbase/onchain-app-template' },
-  { name: 'Commerce', url: 'https://github.com/coinbase/onchain-commerce-template'},
-  { name: 'Fund', url: 'https://github.com/fakepixels/fund-component' },
-];
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function App() {
-  return (
-    <div className="flex flex-col min-h-screen font-sans dark:bg-background dark:text-white bg-white text-black">
-      <header className="pt-4 pr-4">
-        <div className="flex justify-end">
-          <div className="wallet-container">
-            <Wallet>
-              <ConnectWallet>
-                <Avatar className="h-6 w-6" />
-                <Name />
-              </ConnectWallet>
-              <WalletDropdown>
-                <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
-                  <Avatar />
-                  <Name />
-                  <Address />
-                  <EthBalance />
-                </Identity>
-                <WalletDropdownFundLink />
-                <WalletDropdownDisconnect />
-              </WalletDropdown>
-            </Wallet>
-          </div>
-        </div>
-      </header>
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/start");
+  };
 
-      <main className="flex-grow flex items-center justify-center">
-        <div className="max-w-4xl w-full p-4">
-          <div className="w-1/3 mx-auto mb-6">
-            <ImageSvg />
-          </div>
-          <div className="flex justify-center mb-6">
-            <a target="_blank" rel="_template" href="https://onchainkit.xyz">
-              <OnchainkitSvg className="dark:text-white text-black" />
-            </a>
-          </div>
-          <p className="text-center mb-6">
-            Get started by editing
-            <code className="p-1 ml-1 rounded dark:bg-gray-800 bg-gray-200">app/page.tsx</code>.
-          </p>
+  return (
+    <div className="flex min-h-screen font-sans dark:bg-background dark:text-white bg-white text-black">
+
+      <main className="flex-grow  items-center justify-center">
+      <section className="pt-20 pb-20 text-center px-4">
+      <div className="container mx-auto max-w-4xl">
+
+        <h1 className="text-5xl md:text-6xl font-bold mb-6">Enjoy more with Isi</h1>
+        <p className="text-xl md:text-2xl mb-12">Plan easier your personalized experiences.</p>
+        <Button onClick={handleClick} className="bg-emerald-800 hover:bg-emerald-700 text-white px-8 py-6 text-lg">Get started</Button>
+      </div>
+    </section>
+    <section className="py-20 px-4">
+      <div className="container mx-auto max-w-4xl">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Why book with Isi?</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
           <div className="flex flex-col items-center">
-            <div className="max-w-2xl w-full">
-              <div className="flex flex-col md:flex-row justify-between mt-4">
-                <div className="md:w-1/2 mb-4 md:mb-0 flex flex-col items-center">
-                  <p className="font-semibold mb-2 text-center">
-                    Explore components
-                  </p>
-                  <ul className="list-disc pl-5 space-y-2 inline-block text-left">
-                    {components.map((component, index) => (
-                      <li key={index}>
-                        <a
-                          href={component.url}
-                          className="hover:underline inline-flex items-center dark:text-white text-black"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {component.name}
-                          <ArrowSvg />
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="md:w-1/2 flex flex-col items-center">
-                  <p className="font-semibold mb-2 text-center">
-                    Explore templates
-                  </p>
-                  <ul className="list-disc pl-5 space-y-2 inline-block text-left">
-                    {templates.map((template, index) => (
-                      <li key={index}>
-                        <a
-                          href={template.url}
-                          className="hover:underline inline-flex items-center dark:text-white text-black"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {template.name}
-                          <ArrowSvg/>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+            <div className="mb-6">
+              <span role="img" aria-label="Support" className="text-6xl">
+                🐻
+              </span>
             </div>
+            <h3 className="text-xl font-semibold mb-2">24/7</h3>
+            <p>customer support</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="mb-6">
+              <span role="img" aria-label="Rewards" className="text-6xl">
+                🍊
+              </span>
+            </div>
+            <h3 className="text-xl font-semibold">Earn rewards</h3>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="mb-6">
+              <span role="img" aria-label="Plan" className="text-6xl">
+                🌳
+              </span>
+            </div>
+            <h3 className="text-xl font-semibold">Plan your way</h3>
           </div>
         </div>
+      </div>
+    </section>
       </main>
     </div>
   );

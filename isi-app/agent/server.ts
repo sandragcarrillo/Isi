@@ -3,6 +3,24 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { initializeAgent, getRecommendedExperiences } from "./chatbot"; 
 import { HumanMessage } from "@langchain/core/messages";
+import {
+    AgentKit,
+    CdpWalletProvider,
+    walletActionProvider,
+  } from "@coinbase/agentkit";
+  
+  let agentWallet: any;
+
+  (async function initializeAgentWallet() {
+    const config = {
+      apiKeyName: process.env.CDP_API_KEY_NAME,
+      apiKeyPrivateKey: process.env.CDP_API_KEY_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+      networkId: process.env.NETWORK_ID || "base-sepolia", // Puedes cambiar la red
+    };
+  
+    agentWallet = await CdpWalletProvider.configureWithWallet(config);
+    console.log("Agent wallet initialized.");
+  })();
 
 dotenv.config();
 const app = express();
@@ -58,3 +76,48 @@ app.post("/api/chat", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
+
+app.get("/api/agent-wallet", async (req, res) => {
+    try {
+      const walletDetails = await agentWallet.getWalletDetails();
+      const balance = await agentWallet.getNativeBalance();
+  
+      return res.json({
+        address: walletDetails.address,
+        balance,
+      });
+    } catch (error) {
+      console.error("Error fetching agent wallet details:", error);
+      return res.status(500).json({ error: "Failed to fetch wallet details." });
+    }
+  });
+
+  app.post("/api/purchase", async (req, res) => {
+    const { experience, amount } = req.body;
+  
+    if (!experience || !amount) {
+      return res.status(400).json({ error: "Experience and amount are required." });
+    }
+  
+    try {
+      const balance = await agentWallet.getNativeBalance();
+  
+      if (balance < amount) {
+        return res.status(400).json({
+          error: `Insufficient funds. Current balance: $${balance}. Please fund the wallet.`,
+        });
+      }
+  
+      const transaction = await agentWallet.transfer({
+        to: experience.merchantWallet,
+        value: amount,
+      });
+  
+      console.log("Transaction completed:", transaction);
+      return res.json({ success: true, transaction });
+    } catch (error) {
+      console.error("Error during purchase:", error);
+      return res.status(500).json({ error: "Purchase failed." });
+    }
+  });
+  
