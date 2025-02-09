@@ -4,7 +4,6 @@ import {
   ConnectWallet,
   Wallet,
   WalletDropdown,
-  WalletDropdownLink,
   WalletDropdownDisconnect,
   WalletDropdownFundLink,
 } from '@coinbase/onchainkit/wallet';

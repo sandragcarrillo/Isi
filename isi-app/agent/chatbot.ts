@@ -154,7 +154,7 @@ async function main() {
       console.log("Autonomous mode not yet implemented.");
     }
   } catch (error) {
-    console.error("Fatal error:", error.message);
+    console.error("Fatal error:", error instanceof Error ? error.message : error);
     process.exit(1);
   }
 }
@@ -166,3 +166,5 @@ if (require.main === module) {
     process.exit(1);
   });
 }
+
+export { initializeAgent, getRecommendedExperiences };
