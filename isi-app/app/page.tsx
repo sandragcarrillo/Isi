@@ -6,6 +6,7 @@ import {
   WalletDropdown,
   WalletDropdownLink,
   WalletDropdownDisconnect,
+  WalletDropdownFundLink,
 } from '@coinbase/onchainkit/wallet';
 import {
   Address,
@@ -53,14 +54,7 @@ export default function App() {
                   <Address />
                   <EthBalance />
                 </Identity>
-                <WalletDropdownLink
-                  icon="wallet"
-                  href="https://keys.coinbase.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Wallet
-                </WalletDropdownLink>
+                <WalletDropdownFundLink />
                 <WalletDropdownDisconnect />
               </WalletDropdown>
             </Wallet>
